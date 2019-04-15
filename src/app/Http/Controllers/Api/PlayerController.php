@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePlayerRequest;
 use App\Http\Resources\PlayerResource;
 use App\Models\Player;
+use App\Traits\DataTableTrait;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PlayerController extends Controller
 {
+    use DataTableTrait;
+
     /**
      * @var Player
      */
@@ -33,13 +35,9 @@ class PlayerController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $count = $request->get('count');
-        $query = $request->get('query');
+        $teamId = $request->get('team_id', 0);
 
-        $teams = $this->model->when($query, function (Builder $builder) use ($query) {
-            return $builder->where('first_name', 'like', '%' . $query . '%')
-                ->orWhere('last_name', 'like', '%' . $query . '%');
-        })->paginate($count);
+        $teams = $this->toTable($this->model->where('team_id', $teamId), ['first_name', 'last_name']);
 
         return PlayerResource::collection($teams);
     }

@@ -5,7 +5,12 @@ import VueRouter from 'vue-router'
 import Layout from './views/Layout.vue';
 import Login from './views/auth/Login.vue';
 import Register from './views/auth/Register.vue';
-import Index from './views/Index.vue';
+import Index from './views/teams/Index.vue';
+import Create from './views/teams/Create.vue';
+import Show from './views/teams/Show.vue'
+
+import PlayerTable from './views/teams/players/Table'
+import CreatePlayer from './views/teams/players/Create'
 
 Vue.use(VueRouter);
 
@@ -14,12 +19,47 @@ export const router = new VueRouter({
     routes: [
         {
             path: '/',
+            name: 'index',
             component: Layout,
+            meta: {
+                authenticatedOnly: true
+            },
             children: [
                 {
-                    path: '/',
-                    name: 'index',
+                    path: '/teams',
+                    name: 'teams.index',
                     component: Index,
+                },
+                {
+                    path: '/teams/create',
+                    name: 'teams.create',
+                    component: Create
+                },
+                {
+                    path: '/teams/:id/edit',
+                    name: 'teams.edit',
+                    component: Create
+                },
+                {
+                    path: '/teams/:id',
+                    component: Show,
+                    children: [
+                        {
+                            path: '/teams/:id',
+                            name: 'teams.show',
+                            component: PlayerTable
+                        },
+                        {
+                            path: '/teams/:id/players/create',
+                            name: 'players.create',
+                            component: CreatePlayer
+                        },
+                        {
+                            path: '/teams/:id/players/:playerId/edit',
+                            name: 'players.edit',
+                            component: CreatePlayer
+                        }
+                    ]
                 }
             ]
         },
@@ -66,6 +106,10 @@ router.beforeEach(async (to, from, next) => {
     // Logged in user accessing route that is available to guests only.
     if (isAuthenticated && to.matched.some(record => record.meta.guestOnly)) {
         return next({name: 'index'})
+    }
+
+    if (to.name === 'index') {
+        return next({name: 'teams.index'})
     }
 
     if (to.name === 'auth') {

@@ -95,12 +95,16 @@ export default class API {
         return API.request('/api/teams', 'GET', payload);
     }
 
+    static getTeam(teamId) {
+        return API.request(`/api/teams/${teamId}`, 'GET');
+    }
+
     static createTeam(payload) {
         return API.request('/api/teams', 'POST', payload);
     }
 
     static updateTeam(teamId, payload) {
-        return API.request(`/api/teams/${teamId}`, 'PUT', payload);
+        return API.request(`/api/teams/${teamId}`, 'POST', payload);
     }
 
     static deleteTeam(teamId) {
@@ -112,12 +116,16 @@ export default class API {
         return API.request('/api/players', 'GET', payload);
     }
 
+    static getPlayer(playerId) {
+        return API.request(`/api/players/${playerId}`, 'GET');
+    }
+
     static createPlayer(payload) {
         return API.request('/api/players', 'POST', payload);
     }
 
     static updatePlayer(playerId, payload) {
-        return API.request(`/api/players/${playerId}`, 'PUT', payload);
+        return API.request(`/api/players/${playerId}`, 'POST', payload);
     }
 
     static deletePlayer(playerId) {

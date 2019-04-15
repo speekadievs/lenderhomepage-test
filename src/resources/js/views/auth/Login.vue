@@ -87,7 +87,7 @@
                         Date.now() + (response.expires * 1000)
                     );
 
-                    this.$router.push({name: 'films.index'})
+                    this.$router.push({name: 'index'})
                 } catch (e) {
                     this.password = '';
 

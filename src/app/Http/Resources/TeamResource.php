@@ -20,6 +20,7 @@ class TeamResource extends JsonResource
             'name'          => $this->name,
             'image_url'     => $this->image_url,
             'players_count' => $this->players_count ?? 0,
+            'players'       => PlayerResource::collection($this->whenLoaded('players'))
         ];
     }
 }

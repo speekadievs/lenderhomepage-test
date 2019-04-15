@@ -49,7 +49,7 @@ class TeamSeeder extends Seeder
             ],
             [
                 'name'    => 'Baltimore Ravens',
-                'image'   => resource_path('seed_images/teams/arizona_cardinals.gif'),
+                'image'   => resource_path('seed_images/teams/baltimore_ravens.gif'),
                 'players' => [
                     [
                         'first_name' => 'Anthony ',
