@@ -24,8 +24,10 @@ class StorePlayerRequest extends FormRequest
     public function rules()
     {
         return [
+            'team_id'    => 'required|exists:teams,id',
             'first_name' => 'required',
-            'last_name'  => 'required'
+            'last_name'  => 'required',
+            'image'      => 'nullable|mimes:jpeg,gif,png|max:10000',
         ];
     }
 }

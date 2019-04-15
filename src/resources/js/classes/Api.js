@@ -89,4 +89,38 @@ export default class API {
     static updateUser(payload) {
         return API.request('/api/user', 'PUT', payload);
     }
+
+    /** Teams */
+    static getTeams(payload) {
+        return API.request('/api/teams', 'GET', payload);
+    }
+
+    static createTeam(payload) {
+        return API.request('/api/teams', 'POST', payload);
+    }
+
+    static updateTeam(teamId, payload) {
+        return API.request(`/api/teams/${teamId}`, 'PUT', payload);
+    }
+
+    static deleteTeam(teamId) {
+        return API.request(`/api/teams/${teamId}`, 'DELETE');
+    }
+
+    /** Players */
+    static getPlayers(payload) {
+        return API.request('/api/players', 'GET', payload);
+    }
+
+    static createPlayer(payload) {
+        return API.request('/api/players', 'POST', payload);
+    }
+
+    static updatePlayer(playerId, payload) {
+        return API.request(`/api/players/${playerId}`, 'PUT', payload);
+    }
+
+    static deletePlayer(playerId) {
+        return API.request(`/api/players/${playerId}`, 'DELETE');
+    }
 }

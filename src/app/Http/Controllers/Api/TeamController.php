@@ -44,6 +44,17 @@ class TeamController extends Controller
     }
 
     /**
+     * @param Team $team
+     * @return TeamResource
+     */
+    public function show(Team $team): TeamResource
+    {
+        $team->load('players');
+
+        return new TeamResource($team);
+    }
+
+    /**
      * @param StoreTeamRequest $request
      * @param Team|null $team
      * @return TeamResource

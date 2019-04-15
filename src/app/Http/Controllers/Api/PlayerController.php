@@ -45,6 +45,15 @@ class PlayerController extends Controller
     }
 
     /**
+     * @param Player $player
+     * @return PlayerResource
+     */
+    public function show(Player $player): PlayerResource
+    {
+        return new PlayerResource($player);
+    }
+
+    /**
      * @param StorePlayerRequest $request
      * @param Player|null $player
      * @return PlayerResource

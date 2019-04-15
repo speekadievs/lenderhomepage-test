@@ -21,7 +21,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user', 'Api\UserController@index')->name('user');
     Route::put('user', 'Api\UserController@update')->name('user.update');
 
-    Route::resource('teams', 'Api\TeamController')->except(['edit', 'show']);
-    Route::resource('players', 'Api\PlayerController')->except(['edit', 'show']);
+    Route::resource('teams', 'Api\TeamController')->except(['edit']);
+    Route::resource('players', 'Api\PlayerController')->except(['edit']);
 });
 

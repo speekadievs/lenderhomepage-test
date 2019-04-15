@@ -24,7 +24,8 @@ class StoreTeamRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name'  => 'required',
+            'image' => 'nullable|mimes:jpeg,gif,png|max:10000',
         ];
     }
 }
