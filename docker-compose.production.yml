@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nginx:
+    volumes:
+      - "/docker-data/${PROJECT}/uploads:/app/public/uploads"
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      - VIRTUAL_HOST=lenderhomepage.traprun.io
+      - VIRTUAL_PORT=80
+      - VIRTUAL_PROTO=http
+    command: /bin/sh -c "chown -R 1000:1000 /app && envsubst '$$VIRTUAL_HOST' < /etc/nginx/conf.d/default-production.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+  php:
+    environment:
+      - COMPOSER_CACHE_DIR=/cache/composer
+    volumes:
+      - "/var/cache:/cache:rw"
+      - "/docker-data/${PROJECT}/storage:/app/storage"
+      - "/docker-data/${PROJECT}/uploads:/app/public/uploads"
+      - "/docker-data/${PROJECT}/.env:/app/.env"
+    command: /bin/sh -c "crontab -u www-data /usr/crontab && /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf"
+  mysql:
+    volumes:
+      - "/docker-data/${PROJECT}/mysql:/var/lib/mysql"
+    ports:
+      - "1996:3306"
